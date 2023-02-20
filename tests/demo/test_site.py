@@ -19,23 +19,20 @@ class TestDemoOrderPage(unittest.TestCase):
     with open("conf/app.json") as f:
         df = json.load(f)
         print(df)
-        binary_location = df["binary_location"]
-        executable_path = df["executable_path"]
+        chrome_path = df["chrome_path"]
+        chromedriver_path = df["chromedriver_path"]
         if df["is_headless"]  == "True":
             is_headless = True
         else:
             is_headless = False
 
     def test_browser_start_close(self):
-        """[test_browser_start_close]
+        """[python -m unittest tests.demo.test_site.TestDemoOrderPage.test_browser_start_close]
         """
-        page = DemoOrderPage(binary_location=self.binary_location, executable_path=self.executable_path, is_headless=self.is_headless)
+        page = DemoOrderPage(chrome_path=self.chrome_path, chromedriver_path=self.chromedriver_path, is_headless=self.is_headless)
         time.sleep(10)
         page.reload()
         time.sleep(5)
-        page.close()
-        page = DemoOrderPage(binary_location=self.binary_location, executable_path=self.executable_path, is_headless=self.is_headless)
-        time.sleep(10)
         page.close()
 
     def trading_name(self):

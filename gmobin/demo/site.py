@@ -37,30 +37,30 @@ class DemoOrderPageDataConsistencyError(RuntimeError):
 class DemoOrderPage:
     url = "https://demo.click-sec.com/ixop/order.do"
 
-    def __init__(self, binary_location: str, executable_path: str, is_headless: bool):
-            """[__init__]
+    def __init__(self, chrome_path: str, chromedriver_path: str, is_headless: bool):
+            """_summary_
 
-            Arguments:
-                binary_location {[str]} -- [headless chrome binary_location]
-                executable_path {[str]} -- [headless chrome executable_path]
-                is_headless {[bool]} -- [headless mode or not]
+            Args:
+                chrome_path (str): _description_
+                chromedriver_path (str): _description_
+                is_headless (bool): _description_
             """
-            logger.info(f"init by binary_location: {binary_location}, executable_path: {executable_path}, is_headless: {is_headless}")
+            logger.info(f"init by chrome_path: {chrome_path}, chromedriver_path: {chromedriver_path}, is_headless: {is_headless}")
             options = Options()
-            options.binary_location = binary_location
+            options.binary_location = chrome_path
             if is_headless:
                 options.add_argument('--headless')
-                # https://www.ytyng.com/blog/ubuntu-chromedriver/
-                options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems
-                options.add_argument("start-maximized") # open Browser in maximized mode
-                options.add_argument("disable-infobars") # disabling infobars
-                options.add_argument("--disable-extensions") # disabling extensions
-                options.add_argument("--disable-gpu") # applicable to windows os only
-                options.add_argument("--no-sandbox") # Bypass OS security model
+            # https://www.ytyng.com/blog/ubuntu-chromedriver/
+            options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems
+            options.add_argument("start-maximized") # open Browser in maximized mode
+            options.add_argument("disable-infobars") # disabling infobars
+            options.add_argument("--disable-extensions") # disabling extensions
+            options.add_argument("--disable-gpu") # applicable to windows os only
+            options.add_argument("--no-sandbox") # Bypass OS security model
             caps = DesiredCapabilities.CHROME
             caps['loggingPrefs'] = {'performance': 'INFO'}
             options.add_experimental_option('w3c', False)
-            self.driver = webdriver.Chrome(options=options, executable_path=executable_path, desired_capabilities=caps)
+            self.driver = webdriver.Chrome(options=options, executable_path=chromedriver_path, desired_capabilities=caps)
             self.driver.implicitly_wait(5)
             self.__init_page(click_skip=True)
 
